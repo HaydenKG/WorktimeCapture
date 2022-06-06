@@ -1,0 +1,49 @@
+[
+    {
+        "savedId": 1,
+        "date": "25/04/2022",
+        "savedStartTime": "07: 00",
+        "savedEndTime": "17: 00",
+        "savedBreakTime": "0: 30",
+        "savedTotalTime": "9: 30",
+        "savedDescription": ""
+    },
+    {
+        "savedId": 2,
+        "date": "26/04/2022",
+        "savedStartTime": "",
+        "savedEndTime": "",
+        "savedBreakTime": "",
+        "savedTotalTime": "NaN:NaN",
+        "savedDescription": ""
+    },
+    {
+        "savedId": 2,
+        "date": "",
+        "savedStartTime": "",
+        "savedEndTime": "",
+        "savedBreakTime": "",
+        "savedTotalTime": "",
+        "savedDescription": ""
+    },
+    {
+        "savedId": 3,
+        "date": "",
+        "savedStartTime": "",
+        "savedEndTime": "",
+        "savedBreakTime": "",
+        "savedTotalTime": "",
+        "savedDescription": ""
+    },
+    {
+        "savedId": 4,
+        "date": "",
+        "savedStartTime": "",
+        "savedEndTime": "",
+        "savedBreakTime": "",
+        "savedTotalTime": "",
+        "savedDescription": ""
+    },
+    "9: 30",
+    "30.0"
+]

@@ -14,8 +14,9 @@ import {
   isSunday,
   isSaturday,
 } from "date-fns";
+/* eslint-disable no-unused-vars */
 import dayEntry from "./dayEntry.vue";
-import sidebar from "./sidebar.vue";
+import monthResult from "./monthResult.vue";
 
 const currentDate = new Date();
 let focusedDate = ref();
@@ -25,7 +26,6 @@ firstDayOfMonth = startOfMonth(currentDate);
 let monthEntries = reactive([]);
 let idTrigger = 0;
 let startDay = ref(0);
-let endDay = ref(31);
 let computationTrigger = ref(0);
 let monthExtraInfo = reactive([0, 0]);
 let shouldHours = ref(0);
@@ -55,7 +55,6 @@ function calculateShouldHours(days) {
 
 function fillMonthEntries(date) {
   monthEntries.splice(0, monthEntries.length);
-  console.log(date);
   firstDayOfMonth.value = startOfMonth(date);
   let daysInMonth = getDaysInMonth(date);
 
@@ -90,7 +89,6 @@ function getDifferentMonth(direction) {
   } else {
     focusedDate.value = addMonths(focusedDate.value, 1);
   }
-  console.log(focusedDate.value);
   loadMonth(focusedDate.value);
 }
 
@@ -172,24 +170,10 @@ const avgBreakTime = computed(() => {
   computationTrigger.value;
   return (sum / counter).toFixed(1);
 });
-
-function onEnter(el, done) {
-  gsap.to(el, {
-    opacity: 1,
-    height: "1.6em",
-    delay: el.dataset.index * 0.15,
-    onComplete: done,
-  });
-}
 </script>
 
 <template>
   <div class="landing-container">
-    <sidebar
-      :avgBreakTime="avgBreakTime"
-      :totalTime="totalTime"
-      :shouldHours="shouldHours"
-    />
     <div class="content">
       <div class="title">
         <button @click="getDifferentMonth(-1)">
@@ -209,16 +193,12 @@ function onEnter(el, done) {
           <p>Worked</p>
           <p>Description</p>
         </div>
-        <!-- Add animations ?  -->
         <div
           id="entries"
-          v-for="(day, index) in entries.slice(startDay, 30 - (30 - endDay))"
+          v-for="(day, index) in monthEntries"
           :key="day.id"
         >
-          <hr
-            v-if="index != 0"
-            :class="{ newWeek: day.date.includes('Mon') }"
-          />
+          <hr v-if="index != 0" />
           <day-entry
             :id="index"
             :date="day.date"
@@ -226,6 +206,7 @@ function onEnter(el, done) {
             @saveDayData="(msg) => updateMonth(msg, index)"
           />
         </div>
+        <monthResult :shouldHours="shouldHours" :breakAvg="avgBreakTime" :total="totalTime" />
       </div>
     </div>
   </div>
@@ -236,31 +217,46 @@ function onEnter(el, done) {
 h3 {
   margin: 40px 0 0;
 }
+
 ul {
   list-style-type: none;
   padding: 0;
 }
+
 li {
   display: inline-block;
   margin: 0 10px;
 }
+
 a {
   color: #42b983;
 }
-.newWeek {
-  height: 2px;
-  background-color: #42b983;
+
+button {
+  border: none;
+  background-color: transparent;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin: 5px;
+}
+
+button:hover {
+  transition: all 0.3s;
+  color: #42b983;
 }
 
 .landing-container {
+  margin-top: 50px;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  align-items: center;
 }
 
 .content {
-  padding: 5%;
   text-align: center;
   width: 80%;
+  margin-bottom: 5%;
 }
 
 .title {
@@ -275,14 +271,6 @@ a {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 2fr;
   text-align: center;
-}
-
-.tableHeader p {
-  font-weight: 600;
-}
-
-button {
-  color: inherit;
 }
 
 .arrow {

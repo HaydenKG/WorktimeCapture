@@ -1,28 +1,31 @@
 <template>
-  <span id="row">
-    <p id="date">{{ d }}</p>
+  <div>
+    <span id="row">
+      <p id="date">{{ d }}</p>
 
-    <input type="time" id="starttimeinput" v-model="startTime" />
-    <input type="time" id="endtimeinput" v-model="endTime" />
-    <input
-      id="breaktime"
-      type="text"
-      minlength="4"
-      maxlength="5"
-      placeholder="0:30"
-      v-model="breakTime"
-      @change="startCalculation()"
-      @blur="startCalculation()"
-    />
-    <p id="total">{{ total }}h</p>
-    <input
-      id="descriptioninput"
-      type="text"
-      placeholder="Development of.."
-      v-model="description"
-      @change="saveEntries()"
-    />
-  </span>
+      <input type="time" ref="starttimeinput" v-model="startTime" />
+      <input type="time" ref="endtimeinput" v-model="endTime" />
+      <input
+        ref="breaktime"
+        type="text"
+        minlength="4"
+        maxlength="5"
+        placeholder="0:30"
+        v-model="breakTime"
+        @change="startCalculation()"
+        @blur="startCalculation()"
+      />
+      <p>{{ total }}h</p>
+      <input
+        ref="descriptioninput"
+        type="text"
+        placeholder="Development of.."
+        v-model="description"
+        @change="saveEntries()"
+      />
+      <!-- <button @click="saveEntries()">Save</button> -->
+    </span>
+  </div>
 </template>
 
 <script setup>
@@ -35,6 +38,7 @@ const props = defineProps({
   dayData: Object,
 });
 let d = props.date;
+
 
 let dataToSave = JSON.parse(JSON.stringify(props.dayData));
 dataToSave.date = d;
@@ -110,7 +114,7 @@ function startCalculation() {
 
 // let dataToSave = 0;
 function saveEntries() {
-  if (dataToSave == true && $("descriptioninput").value == "") return;
+  if (dataToSave == true && this.$refs.descriptioninput.value == "") return;
 
   dataToSave = {
     id: props.id,
@@ -128,24 +132,19 @@ function saveEntries() {
 
 function resetFalseElements(which) {
   if (which == 1) {
-    $("starttimeinput").value = 0;
-    $("endtimeinput").value = 0;
+    this.$refs.starttimeinput.value = 0;
+     this.$refs.endtimeinput.value = 0;
   }
   if (which == 2) {
-    document.getElementById("endtimeinput").value = 0;
-    document.getElementById("breaktime").value = 0;
-    $("total").innerText = "--";
+    this.$refs.endtimeinput.value = 0;
+    this.$refs.breaktime.value = 0;
+    total.value = "--"
   }
-}
-
-function $(id) {
-  return document.getElementById(id);
 }
 </script>
 
 <style>
 #row {
-  /* animation: enter 0.82s linear; */
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 2fr;
   column-gap: 15px;
@@ -160,14 +159,5 @@ function $(id) {
 #row input:active {
   border-color: #297350;
   border-width: 0 0 2px;
-}
-
-@keyframes enter {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
 }
 </style>

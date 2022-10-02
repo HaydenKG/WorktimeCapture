@@ -9,6 +9,7 @@ Functions:
     - week page (by splitting the month array into the specific dates and displaying the new array)
     - export of the data as .xls
     - including some design changes (different landscape wallpaper for less minimal visuals)
+    - set own off-days (instead of being fixed to Saturday and Sunday)
 
 ## Project setup
 ```

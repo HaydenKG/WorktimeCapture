@@ -61,7 +61,7 @@ function fillMonthEntries(date) {
   for (let i = 0; i < daysInMonth; i++) {
     let unformatedDate = addDays(firstDayOfMonth.value, i);
     if (isSaturday(unformatedDate) || isSunday(unformatedDate)) {
-      // continue;
+      continue;
     }
     let date =
       unformatedDate.toString().substring(0, 3) +

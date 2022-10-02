@@ -28,28 +28,40 @@ export default {
 </template>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+
 body {
   margin: 0;
 }
 
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Roboto', Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  display: grid;
+  justify-items: center;
+  align-items: start;
+  font-size: 1.3rem;
 }
 
-button{
+button {
     border: 1px solid #7e7e7e;
     border-radius: 2px;
     background: transparent;
     padding: 2px 10px;
-    width: 80px; 
+    margin: 10px;
+    width: 100px; 
+    font-size: inherit;
+}
+
+button:hover {
+  border-color:  #50e6a2;
+}
+
+button:active {
+  border-color:  #42b983;
 }
 </style>

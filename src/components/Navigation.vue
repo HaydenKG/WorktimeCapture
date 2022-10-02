@@ -44,14 +44,16 @@ function changeSelection(trigger_selection){
     display: grid;
     grid-template-columns: 1fr 3fr 1fr;
     justify-items: center;
-    position: fixed;
-    top: 0;
     background-color: #fff;
+}
+
+#task-bar h3 {
+    margin: 1rem;
 }
 
 #selection{
     display: flex;
-    width: 30%;
+    width: 50%;
     justify-content: space-around;
     align-items: center;
 }

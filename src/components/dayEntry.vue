@@ -1,7 +1,7 @@
 <template>
   <div>
     <span id="row">
-      <p id="date">{{ d }}</p>
+      <p id="date">{{ date }}</p>
 
       <input type="time" ref="starttimeinput" v-model="startTime" />
       <input type="time" ref="endtimeinput" v-model="endTime" />
@@ -37,11 +37,11 @@ const props = defineProps({
   date: String,
   dayData: Object,
 });
-let d = props.date;
+let { date } = props;
 
 
 let dataToSave = JSON.parse(JSON.stringify(props.dayData));
-dataToSave.date = d;
+dataToSave.date = date;
 
 const emit = defineEmits(["saveDayData"]);
 
@@ -62,9 +62,12 @@ function loadData() {
     endTime.value = "" + dataToSave.savedEndTime;
   if (dataToSave.savedBreakTime != 0)
     breakTime.value = dataToSave.savedBreakTime;
-  if (dataToSave.savedTotalTime != 0) total.value = dataToSave.savedTotalTime;
+  if (dataToSave.savedTotalTime != 0) 
+    total.value = dataToSave.savedTotalTime;
   if (dataToSave.savedDescription != "")
     description = dataToSave.savedDescription;
+  if(total.value == "")
+    total.value = "-- ";
 }
 
 function calculateTimeDifference(start, end, breakT) {
@@ -112,13 +115,12 @@ function startCalculation() {
   saveEntries();
 }
 
-// let dataToSave = 0;
 function saveEntries() {
   if (dataToSave == true && this.$refs.descriptioninput.value == "") return;
 
   dataToSave = {
     id: props.id,
-    date: d,
+    date: date,
     savedStartTime: startTime.value,
     savedEndTime: endTime.value,
     savedBreakTime: breakTime.value,

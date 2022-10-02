@@ -1,13 +1,9 @@
 <script setup>
 import { ref, reactive, computed, getCurrentInstance } from "vue";
 import {
-  intlFormat,
-  startOfWeek,
   addDays,
-  subDays,
   addMonths,
   subMonths,
-  getMonth,
   format,
   getDaysInMonth,
   startOfMonth,
@@ -17,6 +13,7 @@ import {
 /* eslint-disable no-unused-vars */
 import dayEntry from "./dayEntry.vue";
 import monthResult from "./monthResult.vue";
+import {helper} from "./helper.js"
 
 const currentDate = new Date();
 let focusedDate = ref();
@@ -25,7 +22,6 @@ let firstDayOfMonth = ref();
 firstDayOfMonth = startOfMonth(currentDate);
 let monthEntries = reactive([]);
 let idTrigger = 0;
-let startDay = ref(0);
 let computationTrigger = ref(0);
 let monthExtraInfo = reactive([0, 0]);
 let shouldHours = ref(0);
@@ -34,20 +30,24 @@ let shouldHours = ref(0);
 loadMonth(currentDate);
 
 function loadMonth(date) {
-  if (localStorage.getItem(getMonthName(date) + date.getFullYear()) === null) {
+  if (localStorage.getItem(helper.getMonth(date) + date.getFullYear()) === null) {
     console.log("No data saved yet");
     fillMonthEntries(date);
+    saveMonth();
     return;
   }
   monthEntries.splice(0, monthEntries.length);
   let tempObj = JSON.parse(
-    localStorage.getItem(getMonthName(date) + date.getFullYear())
+    localStorage.getItem(helper.getMonth(date) + date.getFullYear())
   );
   calculateShouldHours(tempObj.length);
   for (let i = 0; i < tempObj.length; i++) {
+    tempObj[i].id = ++idTrigger;
     monthEntries.push(tempObj[i]);
   }
 }
+
+helper.refreshMonth = (date) => loadMonth(date);
 
 function calculateShouldHours(days) {
   shouldHours.value = days * 8;
@@ -61,13 +61,12 @@ function fillMonthEntries(date) {
   for (let i = 0; i < daysInMonth; i++) {
     let unformatedDate = addDays(firstDayOfMonth.value, i);
     if (isSaturday(unformatedDate) || isSunday(unformatedDate)) {
-      continue;
+      // continue;
     }
-
     let date =
       unformatedDate.toString().substring(0, 3) +
       " " +
-      intlFormat(unformatedDate);
+      format(new Date(unformatedDate), 'dd/MM/yy');
 
     monthEntries.push({
       id: idTrigger,
@@ -77,6 +76,7 @@ function fillMonthEntries(date) {
       savedBreakTime: "",
       savedTotalTime: "",
       savedDescription: "",
+      unformatedDate: unformatedDate
     });
     idTrigger++;
   }
@@ -92,10 +92,6 @@ function getDifferentMonth(direction) {
   loadMonth(focusedDate.value);
 }
 
-function getMonthName(date) {
-  return format(date, "MMMM");
-}
-
 function updateMonth(day, index) {
   console.log("Index: " + index + " emit reached parent", day);
   monthEntries[index] = day;
@@ -104,37 +100,28 @@ function updateMonth(day, index) {
 
 function saveMonth() {
   localStorage.setItem(
-    getMonthName(focusedDate.value) + focusedDate.value.getFullYear(),
+    helper.getMonth(focusedDate.value) + focusedDate.value.getFullYear(),
     JSON.stringify(monthEntries)
   );
 }
 
-function getExtraInformation(date) {
-  if (
-    localStorage.getItem(getMonthName(date) + date.getFullYear() + "extra") ===
-    null
-  ) {
-    console.log("No data saved yet");
-    return;
+function downloadMonth() {
+  let textObj = JSON.parse(localStorage.getItem(helper.getMonth(focusedDate.value) + focusedDate.value.getFullYear()));
+  let text = "";
+  for(let i = 0; i < textObj.length; i++){
+    text += `\n ${textObj[i].date} : ${textObj[i].savedStartTime} - ${textObj[i].savedEndTime} \t break duration: ${textObj[i].savedBreakTime} \t description ${textObj[i].savedDescription}`
   }
-  let tempArr = localStorage.getItem(
-    getMonthName(date) + date.getFullYear() + "extra"
-  );
-  monthExtraInfo.splice(0, 2);
-  monthExtraInfo.push(tempArr[0]);
-  monthExtraInfo.push(tempArr[1]);
-}
+  var element = document.createElement('a');
+  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text ? text : "No data entered"));
+  element.setAttribute('download', helper.getMonth(focusedDate.value) + focusedDate.value.getFullYear()+".txt");
 
-function saveExtraInformation() {
-  localStorage.setItem(
-    getMonthName(focusedDate.value) + focusedDate.value.getFullYear() + "extra",
-    JSON.stringify(monthExtraInfo)
-  );
-}
+  element.style.display = 'none';
+  document.body.appendChild(element);
 
-const entries = computed(() => {
-  return monthEntries;
-});
+  element.click();
+
+  document.body.removeChild(element);
+}
 
 const totalTime = computed(() => {
   let hours = 0;
@@ -176,11 +163,11 @@ const avgBreakTime = computed(() => {
   <div class="landing-container">
     <div class="content">
       <div class="title">
-        <button @click="getDifferentMonth(-1)">
+        <button class="changeMonthBtn" @click="getDifferentMonth(-1)">
           <i class="arrow left"></i>
         </button>
-        <h1>{{ getMonthName(focusedDate) }}</h1>
-        <button @click="getDifferentMonth(1)">
+        <h1 id="monthTitle">{{ helper.getMonth(focusedDate) }}</h1>
+        <button class="changeMonthBtn" @click="getDifferentMonth(1)">
           <i class="arrow right"></i>
         </button>
       </div>
@@ -207,6 +194,7 @@ const avgBreakTime = computed(() => {
           />
         </div>
         <monthResult :shouldHours="shouldHours" :breakAvg="avgBreakTime" :total="totalTime" />
+        <button id="exportBtn" @click="downloadMonth()">Export</button>
       </div>
     </div>
   </div>
@@ -232,7 +220,7 @@ a {
   color: #42b983;
 }
 
-button {
+.changeMonthBtn {
   border: none;
   background-color: transparent;
   width: 40px;
@@ -241,13 +229,12 @@ button {
   margin: 5px;
 }
 
-button:hover {
+.changeMonthBtn:hover {
   transition: all 0.3s;
   color: #42b983;
 }
 
 .landing-container {
-  margin-top: 50px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -267,10 +254,15 @@ button:hover {
   align-items: center;
 }
 
+#monthTitle {
+  min-width: 200px;
+}
+
 .tableHeader {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 2fr;
   text-align: center;
+  column-gap: 15px;
 }
 
 .arrow {

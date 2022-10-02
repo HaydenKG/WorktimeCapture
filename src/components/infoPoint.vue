@@ -6,8 +6,7 @@
         Your times are saved locally in your browsers storage.
         No data is leaving your PC.
         The times you enter are saved automatically.
-        So even if you lose internet conenction or close the browser it is saved.
-        <button :disabled="true">Export</button>
+        So even if you lose internet connection or close the browser it is saved.
     </div>
 </template>
 
@@ -16,6 +15,6 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        width: 60%;
+        width: 50%;
     }
 </style>

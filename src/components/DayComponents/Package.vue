@@ -13,7 +13,7 @@ let count = ref(1);
 <template>
    <div class="card w-90p m-1" :style="{borderLeft: '2px solid ' + props.borderColor}">
     <div class="idInputContainer">
-        <h6>Package ID:</h6>
+        <h6>Project name:</h6>
         <input type="text" class="idInput"/> 
     </div>
     <div v-for="n in count" :key="n">
@@ -31,8 +31,10 @@ h6 {
 .idInputContainer{
     margin: 1rem 0;
     display: grid;
-    grid-template-columns: .5fr .4fr;
+    grid-template-columns: .25fr .4fr;
     align-items: center;
+    justify-items: start;
+    padding-left: 3rem;
 }
 
 .idInput{

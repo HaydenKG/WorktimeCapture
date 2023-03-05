@@ -57,6 +57,7 @@ function calculateDuration(onChange){
     <table class="table m-0">
         <thead>
             <tr>
+                <th>Package ID</th>
                 <th><button v-on:click="setStartTime" :disabled="startTimeInput != null">Start</button></th>
                 <th><button v-on:click="setEndTime" :disabled="endTimeInput != null">Stop</button></th>
                 <th>Duration</th>
@@ -66,6 +67,7 @@ function calculateDuration(onChange){
         <hr>
         <tbody>
             <tr>
+                <th><input type="text" placeholder="33200"></th>
                 <th><input type="time" v-model="startTimeInput" v-on:blur="calculateDuration(true)"/></th>
                 <th><input type="time" v-model="endTimeInput" v-on:blur="calculateDuration(true)"/></th>
                 <th>{{duration}}</th>
@@ -78,13 +80,13 @@ function calculateDuration(onChange){
 <style>
 tr{
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: .5fr repeat(4, 1fr);
     align-items: center;
 }
 
 th {
     justify-self: center;
-    padding: 0 !important;
+    padding: 0 4px !important;
     font-size: 1.2rem;
     border: none !important;
 }

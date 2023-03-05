@@ -1,7 +1,7 @@
 <script setup>
 import { ref, reactive, computed, getCurrentInstance } from "vue";
 import {  format, isEqual, parseISO, getFullYear  } from "date-fns";
-import {helper} from "./helper.js"
+import {helper} from "../helper.js"
 
 let startedSession = ref(false);
 let onBreak = ref(false);

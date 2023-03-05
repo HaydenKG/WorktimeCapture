@@ -11,8 +11,8 @@ import {
   isSaturday,
 } from "date-fns";
 /* eslint-disable no-unused-vars */
-import dayEntry from "./dayEntry.vue";
-import monthResult from "./monthResult.vue";
+import DayEntry from "./DayComponents/DayEntry.vue";
+import monthResult from "./MonthResult.vue";
 import {helper} from "./helper.js"
 
 const currentDate = new Date();
@@ -218,6 +218,12 @@ li {
 
 a {
   color: #42b983;
+}
+
+hr {
+  background-color: rgb(141, 141, 141);
+  height: 1px;
+  border: none;
 }
 
 .changeMonthBtn {

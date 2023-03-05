@@ -1,8 +1,9 @@
 <script>
 import MonthPanel from "./components/LandingMonth.vue";
 import Navigation from "./components/Navigation.vue";
-import dayEntry from "./components/dayPanel.vue"
-import infoPoint from "./components/infoPoint.vue"
+// import DayEntry from "./components/dayPanel.vue"
+import InfoPage from "./components/InfoPage.vue"
+import UpdatedToday from "./components/DayComponents/UpdatedToday.vue"
 
 export default {
   name: "App",
@@ -14,17 +15,18 @@ export default {
   components: {
     MonthPanel,
     Navigation,
-    dayEntry,
-    infoPoint
+    InfoPage,
+    UpdatedToday
 }
 };
 </script>
 
 <template>
     <Navigation @response="(panelId) => this.activePanel = panelId" />
-    <dayEntry v-show="activePanel == 0"/>
-    <MonthPanel v-show="activePanel == 2"/>
-    <infoPoint v-show="activePanel == 3"/>
+    <UpdatedToday v-show="activePanel == 0"/>
+    <!-- <MonthPanel v-show="activePanel == 2"/> -->
+    <!-- <InfoPage v-show="activePanel == 3"/> -->
+    
 </template>
 
 <style>
@@ -48,17 +50,19 @@ body {
 }
 
 button {
-    border: 1px solid #7e7e7e;
-    border-radius: 2px;
+    border-radius: 0;
+    border-color: transparent;
+    border-bottom: 1px solid #aaa;
     background: transparent;
     padding: 2px 10px;
     margin: 10px;
-    width: 100px; 
+    width: 100px;
     font-size: inherit;
+    box-shadow: none;
 }
 
 button:hover {
-  border-color:  #50e6a2;
+  color:  #4ec28e;
 }
 
 button:active {

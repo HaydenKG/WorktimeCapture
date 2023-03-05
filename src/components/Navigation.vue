@@ -27,10 +27,10 @@ function changeSelection(trigger_selection){
     <div id="task-bar">
         <h3>Worktime capture</h3>
         <div id="selection">
-            <p @click="changeSelection('today')" :class="{selected: selection == 0}">Today</p>
-            <!-- <p @click="changeSelection('week')" :class="{selected: selection == 1}">Week</p> -->
-            <p @click="changeSelection('month')" :class="{selected: selection == 2}">Month</p>
-            <p @click="changeSelection('info')" :class="{selected: selection == 3}">Info</p>
+            <h4 @click="changeSelection('today')" :class="{selected: selection == 0}">Today</h4>
+            <!-- <h4 @click="changeSelection('week')" :class="{selected: selection == 1}">Week</h4> -->
+            <!-- <h4 @click="changeSelection('month')" :class="{selected: selection == 2}">Month</h4> -->
+            <!-- <h4 @click="changeSelection('info')" :class="{selected: selection == 3}">Info</h4> -->
         </div>
     </div>
 </template>
@@ -53,17 +53,18 @@ function changeSelection(trigger_selection){
 
 #selection{
     display: flex;
-    width: 50%;
+    width: 60%;
     justify-content: space-around;
     align-items: center;
 }
 
-#selection p{
+#selection h4{
     cursor: pointer;
 }
 
 .selected {
     color: #42b983;
+    cursor: inherit !important;
 }
 
 </style>

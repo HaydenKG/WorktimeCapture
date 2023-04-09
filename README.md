@@ -34,6 +34,6 @@ npm run lint
 ### Deploy on other github branch
 For now the procedure is as follows:
 - run npm run build
-- copy the dist folder to another location so it is not affected when changing the branch
-- on the gp-branch replace the changed files
-- commit and check if everything is working fine
+- copy the dist folder to the docs/ directory since that is selected for github pages
+
+https://haydenkg.github.io/WorktimeCapture/

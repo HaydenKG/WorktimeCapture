@@ -1,8 +1,8 @@
 <script>
-import MonthPanel from "./components/LandingMonth.vue";
+// import MonthPanel from "./components/LandingMonth.vue";
 import Navigation from "./components/Navigation.vue";
 // import DayEntry from "./components/dayPanel.vue"
-import InfoPage from "./components/InfoPage.vue"
+// import InfoPage from "./components/InfoPage.vue"
 import UpdatedToday from "./components/DayComponents/UpdatedToday.vue"
 
 export default {
@@ -13,9 +13,9 @@ export default {
     }
   },
   components: {
-    MonthPanel,
+    // MonthPanel,
     Navigation,
-    InfoPage,
+    // InfoPage,
     UpdatedToday
 }
 };
@@ -61,7 +61,7 @@ button {
     box-shadow: none;
 }
 
-button:hover {
+button:hover:not(:disabled) {
   color:  #4ec28e;
 }
 

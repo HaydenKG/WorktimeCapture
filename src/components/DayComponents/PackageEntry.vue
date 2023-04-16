@@ -109,6 +109,8 @@ hr {
     border: none;
     filter: brightness(0);
     transition: all .2s;
+    background-color: transparent;
+    margin: 0;
 }
 
 .iconButton:hover:not(:disabled){

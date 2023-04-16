@@ -1,32 +1,29 @@
 <script>
-// import MonthPanel from "./components/LandingMonth.vue";
+import { ref } from 'vue'
 import Navigation from "./components/Navigation.vue";
-// import DayEntry from "./components/dayPanel.vue"
-// import InfoPage from "./components/InfoPage.vue"
-import UpdatedToday from "./components/DayComponents/UpdatedToday.vue"
+
+const currentPath = ref(window.location.hash)
+
+window.addEventListener('hashchange', () => {
+  currentPath.value = window.location.hash
+})
+
 
 export default {
   name: "App",
   data() {
     return {
-      activePanel: 0
     }
   },
   components: {
-    // MonthPanel,
     Navigation,
-    // InfoPage,
-    UpdatedToday
-}
+  }
 };
 </script>
 
 <template>
-    <Navigation @response="(panelId) => this.activePanel = panelId" />
-    <UpdatedToday v-show="activePanel == 0"/>
-    <!-- <MonthPanel v-show="activePanel == 2"/> -->
-    <!-- <InfoPage v-show="activePanel == 3"/> -->
-    
+  <Navigation />
+  <router-view></router-view>
 </template>
 
 <style>
@@ -50,22 +47,30 @@ body {
 }
 
 button {
-    border-radius: 0;
-    border-color: transparent;
-    border-bottom: 1px solid #aaa;
-    background: transparent;
-    padding: 2px 10px;
-    margin: 10px;
-    width: 100px;
-    font-size: inherit;
-    box-shadow: none;
+  border-radius: 0;
+  border-color: transparent;
+  border-bottom: 1px solid #aaa;
+  background: transparent;
+  padding: 2px 10px;
+  margin: 10px;
+  width: 100px;
+  font-size: inherit;
+  box-shadow: none;
 }
 
 button:hover:not(:disabled) {
-  color:  #4ec28e;
+  color: #4ec28e;
 }
 
 button:active {
-  border-color:  #42b983;
+  border-color: #42b983;
+}
+
+.addButton{
+  font-size: 1.4rem;
+}
+
+a:focus {
+  box-shadow: none;
 }
 </style>

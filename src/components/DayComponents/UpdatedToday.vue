@@ -14,7 +14,7 @@ const colors = ["#F27055", "#673DF2", "#F2DF24", "#440DF5", "#30F2A9"];
      <Package :borderColor="colors[n]"/>
     </div>
    
-    <button class="btn-transparent" v-on:click="() => count++">+</button>
+    <button class="btn-transparent addButton" v-on:click="() => count++">+</button>
 </template>
 
 <style scoped>

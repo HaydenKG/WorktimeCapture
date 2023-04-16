@@ -19,7 +19,7 @@ let count = ref(1);
         <table class="table m-0">
             <thead>
                 <tr>
-                    <th>Package ID</th>
+                    <th>Identification</th>
                     <th>Start</th>
                     <th>Stop</th>
                     <th>Duration</th>
@@ -30,7 +30,8 @@ let count = ref(1);
         <div v-for="n in count" :key="n">
             <PackageEntry />
         </div>
-        <button class="btn-transparent" v-on:click="() => count++">+</button>
+        <button class="btn-transparent addButton" v-on:click="() => count++">+</button>
+        <p>Duration sum: --</p>
     </div>
 </template>
 
